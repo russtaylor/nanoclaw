@@ -4,6 +4,7 @@
  */
 import { ChildProcess, spawn } from 'child_process';
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
 
 import {
@@ -122,6 +123,16 @@ function buildVolumeMounts(
         readonly: true,
       });
     }
+  }
+
+  // Google Workspace CLI credentials (shared across all groups)
+  const gwsConfigDir = path.join(os.homedir(), '.config', 'gws');
+  if (fs.existsSync(gwsConfigDir)) {
+    mounts.push({
+      hostPath: gwsConfigDir,
+      containerPath: '/home/node/.config/gws',
+      readonly: false,
+    });
   }
 
   // Per-group Claude sessions directory (isolated from other groups)
