@@ -487,7 +487,7 @@ async function runQuery(
         },
         gws: {
           command: 'gws',
-          args: ['mcp', '-s', 'gmail,drive'],
+          args: ['mcp', '-s', 'gmail,drive,sheets,calendar'],
         },
       },
       hooks: {
