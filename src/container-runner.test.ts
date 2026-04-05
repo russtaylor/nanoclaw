@@ -16,8 +16,17 @@ vi.mock('./config.js', () => ({
   GROUPS_DIR: '/tmp/nanoclaw-test-groups',
   IDLE_TIMEOUT: 1800000, // 30min
   OLLAMA_ADMIN_TOOLS: false,
+  ONECLI_URL: 'http://localhost:10254',
   TIMEZONE: 'America/Los_Angeles',
 }));
+
+// Mock OneCLI SDK — simulate unreachable gateway so tests use native proxy fallback
+vi.mock('@onecli-sh/sdk', () => {
+  function OneCLI() {
+    return { applyContainerConfig: () => Promise.resolve(false) };
+  }
+  return { OneCLI };
+});
 
 // Mock logger
 vi.mock('./logger.js', () => ({
